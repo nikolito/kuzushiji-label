@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('task_images', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('iiif_url')->unique();
-            $table->integer('task_user_id')->nullable();
+            $table->foreignId('image_id')->constrained('images');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamp('task_open')->nullable();
             $table->timestamp('task_close')->nullable();
             $table->timestamp('task_expire')->nullable();
             $table->timestamps();
+            $table->softdeletes();
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('task_images');
+        Schema::dropIfExists('tasks');
     }
 };

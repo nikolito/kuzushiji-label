@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,20 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware(['verified'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['verified'])->name('dashboard');
 
-Route::get('/working', function () {
-    return view('working');
-})->middleware(['verified'])->name('working');
+Route::get('/dashboard', 'App\Http\Controllers\TaskController@index')
+->middleware(['verified'])->name('dashboard');
+
+Route::post('/working/new', 'App\Http\Controllers\TaskController@create')
+->middleware(['verified'])->name('working_new');
+
+Route::get('/working', 'App\Http\Controllers\TaskController@show')
+->middleware(['verified'])->name('working');
+
+Route::post('/working/delete', 'App\Http\Controllers\TaskController@destroy')
+->middleware(['verified'])->name('working_delete');
 
 require __DIR__.'/auth.php';

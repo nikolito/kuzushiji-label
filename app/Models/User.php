@@ -10,10 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 /* メール通知 */
 use App\Notifications\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
