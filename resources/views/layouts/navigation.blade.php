@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('working')" :active="request()->routeIs('working')">
                         {{ __('Working') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('annotation')" :active="request()->routeIs('annotation')">
+                        {{ __('Annotation') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -71,6 +74,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('working')" :active="request()->routeIs('working')">
                 {{ __('Working') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('annotation')" :active="request()->routeIs('annotation')">
+                {{ __('Annotation') }}
             </x-responsive-nav-link>
         </div>
 

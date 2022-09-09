@@ -37,5 +37,6 @@
   "Please click the button below to verify your email address.": "以下のボタンをクリックしてメールアドレスを承認済みにしてください。",
   "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.": "ご登録ありがとうございます。タスクを始める前に、当サイトからお送りした確認メールからメールアドレスの承認をしてください。もし、メールが届いていないようであれば、もう一度以下のボタンから確認メールを送ることもできます。確認メールが受信ボックスに見当たらないようであれば、迷惑メールボックスに届いていないかも確認してください。",
   "A new verification link has been sent to the email address you provided during registration.": "新しい確認メールを登録メールアドレスに送信しました。",
-  "Resend Verification Email": "確認メールを再送信"
+  "Resend Verification Email": "確認メールを再送信",
+  "Annotation": "アノテーション"
   }

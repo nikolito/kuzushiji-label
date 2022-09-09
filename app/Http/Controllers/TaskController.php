@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
 use App\Models\Image;
+use App\Consts\KuzushijiConst;
 
 class TaskController extends Controller
 {
@@ -17,6 +18,10 @@ class TaskController extends Controller
      */
     public function index()
     {
+        //ダッシュボードでのタスク候補画像表示
+        //ダッシュボードに表示できる画像数
+        $image_limit = KuzushijiConst::DASHBOARD_LIMIT;
+
         // タスク予約済みのデータを抽出
         $images_reserved = Task::where('user_id', '!=', null)
         ->where('task_close', null)
@@ -40,9 +45,12 @@ class TaskController extends Controller
 
         //タスク予約されていない画像idを抽出
         $free_images = Image::whereNotIn('id', $imageids)
+        ->limit($image_limit)
         ->get();
 
-        return view('dashboard', compact('free_images'));
+        $all_images = Image::get(['id'])->count();
+
+        return view('dashboard', compact('free_images', 'all_images'));
     }
 
     /**
@@ -54,7 +62,7 @@ class TaskController extends Controller
     public function create(Request $request)
     {
         //タスク登録数上限
-        $task_count_valid = 3;
+        $task_count_valid = KuzushijiConst::ACTIVE_TASK_MAX;
         
         //タスクデータを新規登録する
         //画像選択数確認

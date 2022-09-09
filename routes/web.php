@@ -34,4 +34,7 @@ Route::get('/working', 'App\Http\Controllers\TaskController@show')
 Route::post('/working/delete', 'App\Http\Controllers\TaskController@destroy')
 ->middleware(['verified'])->name('working_delete');
 
+Route::get('/annotation', 'App\Http\Controllers\AnnotationController@index')
+->middleware(['verified'])->name('annotation');
+
 require __DIR__.'/auth.php';

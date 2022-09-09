@@ -19,7 +19,12 @@
         </div>
     </div>
 
-    {{-- タスク実行可能なIIIFのリスト --}}
+    <h3 class="ml-8 mb-1 font-semibold text-xl text-cyan-400 leading-tight">
+        選択できる画像数 {{ count($free_images) }} 枚　総画像数 {{ $all_images }} 枚
+    </h3>
+    <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
+
+   {{-- タスク実行可能なIIIFのリスト --}}
     <div class="flex flex-wrap px-6">
         @if (count($free_images) < 1)
             <div class="items-center border-cyan-800 bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg">
