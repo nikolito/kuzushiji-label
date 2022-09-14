@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+html[lang="ja"] {
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+body {
+  background-color: rgb(2, 0, 36);
+}
+
+/* Display fluffy reminders from the right */
+.fadeRight {
+  animation-name: fadeRightAnime;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes fadeRightAnime {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Annotorious styles */
+svg.a9s-annotationlayer .a9s-selection .a9s-outer,
+svg.a9s-annotationlayer .a9s-annotation .a9s-outer {
+  display: none;
+}
+
+svg.a9s-annotationlayer .a9s-selection .a9s-inner,
+svg.a9s-annotationlayer .a9s-annotation .a9s-inner {
+  stroke-width: 2;
+  stroke: blue;
+}
+svg.a9s-annotationlayer .a9s-selection .a9s-inner.a9s-inner:hover,
+svg.a9s-annotationlayer .a9s-annotation .a9s-inner:hover{
+  stroke: red;
+}
+
+svg.a9s-annotationlayer .a9s-handle .a9s-handle-inner {
+  fill: red;
+  stroke: black;
+}
+
+.a9s-annotationlayer .a9s-formatter-el,
+.a9s-annotationlayer .a9s-formatter-el foreignObject {
+  overflow:visible;
+  pointer-events:none;
+}
+
+/*.a9s-annotationlayer .a9s-formatter-el foreignObject .a9s-shape-label-wrapper {
+  position:relative;
+  transform:translateY(-100%);
+  padding-bottom:4px;
+}*/
+
+.a9s-annotationlayer .a9s-formatter-el foreignObject div .a9s-shape-label {
+  display: table !important;
+  margin-top: -1px !important;
+  margin-left: -19px;
+  padding: 2px !important;
+  white-space: nowrap !important;
+  background-color: rgba(0, 0, 255, 0.85) !important;
+  border-radius: 3px !important;
+  border-color: blue;
+  font-size: 16px !important;
+  color: white !important;
+}
+
+foreignObject.hidden {
+  display: none;
+}

@@ -94,6 +94,17 @@ class TaskController extends Controller
         ->where('task_expire', '>', date('Y-m-d H:i:s'))
         ->count();
 
+        //すでに他の人が登録していないか？
+        $others_task_exist = Task::where('image_id', $request->image_id)
+        ->where('task_open', '!=', null)
+        ->where('task_close', null)
+        ->where('task_expire', '>', date('Y-m-d H:i:s'))
+        ->exists();
+        
+        if ($others_task_exist) {
+            return redirect('dashboard')->with('alert', 'この画像は別の人が担当中です。ダッシュボード画面をリロードしてください。');
+        }
+
         //画像選択数が3より少ない場合は登録できる
         if ($results_count < $task_count_valid && !$is_task_closed) {
             //データベースに書き込み

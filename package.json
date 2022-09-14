@@ -16,6 +16,7 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "@recogito/annotorious-shape-labels": "^0.2.3",
         "micromodal": "^0.4.10"
     }
 }

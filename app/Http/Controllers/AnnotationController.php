@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Task;
+use App\Models\Image;
 
 class AnnotationController extends Controller
 {
@@ -14,8 +17,16 @@ class AnnotationController extends Controller
     public function index()
     {
         //Annotation画面にアクセス
-        
-        return view('annotation');
+
+        //有効なタスクを抽出
+        $user_id = Auth::id();
+        $tasks = Task::where('user_id', $user_id)
+        ->where('task_open', '!=', null)
+        ->where('task_close', null)
+        ->where('task_expire', '>', date('Y-m-d H:i:s'))
+        ->get();
+
+        return view('annotation', compact('tasks'));
     }
 
     /**
@@ -42,12 +53,36 @@ class AnnotationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $task_id
+     * @param  int  $image_id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($task_id, $image_id)
     {
-        //
+        //annotation/{task_id}/{image_id}のときタスク画面を出す
+        $user_id = Auth::id();
+        
+        $task_exists = Task::where('id', $task_id)
+        ->where('user_id', $user_id)
+        ->where('image_id', $image_id)
+        ->where('task_open', '!=', null)
+        ->where('task_close', null)
+        ->where('task_expire', '>', date('Y-m-d H:i:s'))
+        ->exists();
+
+        if (!$task_exists) {
+            return redirect('working')->with('alert', '正しいリンク先に移動できませんでした。');
+        } else {
+            $target_task = Task::where('id', $task_id)
+            ->where('user_id', $user_id)
+            ->where('image_id', $image_id)
+            ->where('task_open', '!=', null)
+            ->where('task_close', null)
+            ->where('task_expire', '>', date('Y-m-d H:i:s'))
+            ->first();
+
+            return view('annotation', compact('target_task'));
+        }
     }
 
     /**

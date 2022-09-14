@@ -37,4 +37,11 @@ Route::post('/working/delete', 'App\Http\Controllers\TaskController@destroy')
 Route::get('/annotation', 'App\Http\Controllers\AnnotationController@index')
 ->middleware(['verified'])->name('annotation');
 
+Route::get('/annotation/{task_id}/{image_id}', 'App\Http\Controllers\AnnotationController@show')
+->middleware(['verified'])->name('annotation_task');
+
+Route::get('/help', function () {
+    return view('help');
+})->middleware(['verified'])->name('help');
+
 require __DIR__.'/auth.php';
