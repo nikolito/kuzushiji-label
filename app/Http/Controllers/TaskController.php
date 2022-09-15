@@ -109,13 +109,14 @@ class TaskController extends Controller
         if ($results_count < $task_count_valid && !$is_task_closed) {
             //データベースに書き込み
             $datetime_now = date('Y-m-d H:i:s');
-            $datetime_3days = date('Y-m-d H:i:s', strtotime('3 days'));
+            $task_max = KuzushijiConst::TASK_DAY_LIMIT . ' days';
+            $datetime_xdays = date('Y-m-d H:i:s', strtotime($task_max));
             
             Task::insert([
                 'user_id' => $user_id,
                 'image_id' => $request->image_id,
                 'task_open' => $datetime_now,
-                'task_expire' => $datetime_3days,
+                'task_expire' => $datetime_xdays,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 
@@ -132,7 +133,7 @@ class TaskController extends Controller
                 return redirect('dashboard')->with('alert', '既に作業が完了した画像のため登録できませんでした。');
             } else {
                 //dashboardにフラッシュメッセージでアラート
-                return redirect('dashboard')->with('alert', '登録済みの作業が3つあります。先に作業を完了させるか、登録解除してください。');
+                return redirect('dashboard')->with('alert', '登録済みの作業が' . KuzushijiConst::ACTIVE_TASK_MAX . 'つあります。先に作業を完了させるか、登録解除してください。');
             }
         }
     }
@@ -196,6 +197,8 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
+        //タスクが完了した
+        dd('yeah!');
     }
 
     /**
@@ -218,5 +221,15 @@ class TaskController extends Controller
         Task::find($task[0]['id'])->delete();
 
         return redirect('working')->with('info', '作業を解除しました。');
+    }
+
+    /**
+     * Send some message from a form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendMessage(Request $request) {
+        
     }
 }

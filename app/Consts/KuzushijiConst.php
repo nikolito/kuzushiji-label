@@ -6,6 +6,7 @@ class KuzushijiConst {
 
   const DASHBOARD_LIMIT = 20;
   const ACTIVE_TASK_MAX = 3;
+  const TASK_DAY_LIMIT = 7;
 
   const RECOGNITION_NONE = 0;
   const RECOGNITION_KURONET = 1;

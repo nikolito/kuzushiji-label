@@ -40,6 +40,9 @@ Route::get('/annotation', 'App\Http\Controllers\AnnotationController@index')
 Route::get('/annotation/{task_id}/{image_id}', 'App\Http\Controllers\AnnotationController@show')
 ->middleware(['verified'])->name('annotation_task');
 
+Route::get('/working/finished/{task_id}/{image_id}', 'App\Http\Controllers\TaskController@update')
+->middleware(['verified'])->name('working_finished');
+
 Route::get('/help', function () {
     return view('help');
 })->middleware(['verified'])->name('help');

@@ -63,6 +63,11 @@
                             <a class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold" href="annotation/{{ $task->id }}/{{ $task->image->id }}">開く</a>
                         </div>
                     </div>
+                    <div class="flex justify-center">
+                        <div class="mt-8">
+                            <a class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold" href="working/finished/{{ $task->id }}/{{ $task->image->id }}">作業を完了</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 

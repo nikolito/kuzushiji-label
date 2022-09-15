@@ -15,13 +15,13 @@
 
     <div class="ml-8 mr-8 mt-4">
         <h3 class="text-lg font-bold m-4">
-            自動保存
+            アノテーションする画像の選択
         </h3>
         <p class="m-4">
             ブラウザ画面からログインすると、選択できる画像が表示されています。<br>
             「選択」ボタンを押してください。<br>
             画像のプレビューが出てくるので、「作業を始める」または「止める」ボタンを押してください。<br>
-            作業は()日以内に完了してください。<br>
+            作業は {{ KuzushijiConst::TASK_DAY_LIMIT }} 日以内に完了してください。<br>
             期限内に「進捗」メニューで担当画像に対し、「完了」ボタンが押されていないときは、自動的にダッシュボードに再表示され、他の人が担当できるようになります。
         </p>
 
@@ -37,12 +37,31 @@
         </p>
     </div>
 
-    <h3 class="ml-8 mb-8 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
+    <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
         進捗
     </h3>
     <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
-    <h3 class="ml-8 mb-8 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
+    <div class="ml-8 mr-8 mt-4">
+        <h3 class="text-lg font-bold m-4">
+            一度に担当できる画像の上限
+        </h3>
+        <p class="m-4">
+            ダッシュボードで画像を選択すると、進捗の画面で担当状況を確認できます。<br>
+            担当状況は、進捗の画面に最大 {{ KuzushijiConst::ACTIVE_TASK_MAX }} つまでです。<br>
+            担当作業を完了したり解除したりして空きをつくることで、新しい画像を担当できるようになります。
+        </p>
+        <h3 class="text-lg font-bold m-4">
+            作業の完了
+        </h3>
+        <p class="m-4">
+            作業は進捗画面の各担当画像に付いている「完了する」ボタンを押して、作業完了となります。<br>
+            完了した作業は、進捗に表示されます。<br>
+            作業量は画像の文字を数えて換算します。
+        </p>
+    </div>
+
+    <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
         アノテーション
     </h3>
     <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
@@ -75,6 +94,31 @@
             なお、付箋になった文字は複数入力できますが、最初の1文字が囲みの真横に表示されます。<br>
             作業を仕上げる時に、1文字だけ残してください。
         </p>
+    </div>
+
+    <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
+        質問フォーム
+    </h3>
+    <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
+
+    <div class="ml-8 mr-8 mt-4 h-12">
+        <form action="#" method="POST">
+            @csrf
+            <div class="flex">
+                <div>送信者</div>
+                <div class="ml-8">{{ Auth::user()->name }} ({{Auth::user()->email }}）</div>
+            </div>
+            <div class="flex mt-4">
+                <div>質問内容</div>
+                <textarea class="ml-4" name="questions" rows="8" cols="40"></textarea>
+            </div>
+            <input type="hidden" name="id" value="{{ Auth::id() }}" />
+            <button class="shadow-lg bg-cyan-500 shadow-cyan-500/50 text-white rounded px-2 py-1" type="submit">
+                質問を送る
+            </button>
+        </form>
+    </div>
+
     </div>
 
 </x-app-layout>

@@ -12,7 +12,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    取り組みたい文書画面を選んでください。「作業中」ページに登録できる画像は最大3枚までです。<br>
+                    取り組みたい文書画面を選んでください。「作業中」ページに登録できる画像は最大 {{ KuzushijiConst::ACTIVE_TASK_MAX }} 枚までです。<br>
                     作業が完了すると新しい画像を選べます。
                 </div>
             </div>
@@ -74,7 +74,7 @@
                                 <img src="{{ $iiif_image }}/full/full/0/default.jpg" class="rounded" style="width: 80vw;" />
                             </div>
                             <p>
-                                画像一枚の作業は<span class="text-red-600 font-bold text-lg">3</span>日以内に完了させてください。
+                                画像一枚の作業は<span class="text-red-600 font-bold text-lg">{{ KuzushijiConst::TASK_DAY_LIMIT }}</span>日以内に完了させてください。
                             </p>
                         </main>
                         <footer class="modal__footer flex gap-x-4">
