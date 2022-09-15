@@ -65,7 +65,12 @@
                     </div>
                     <div class="flex justify-center">
                         <div class="mt-8">
-                            <a class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold" href="working/finished/{{ $task->id }}/{{ $task->image->id }}">作業を完了</a>
+                            <form method="POST" action="{{ route('working_finished') }}"> 
+                                @csrf
+                                <input type="hidden" name="task_id" value="{{ $task->id }}" />
+                                <input type="hidden" name="image_id" value="{{ $task->image->id }}" />
+                                <button class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold">作業を完了</button>
+                            </form>
                         </div>
                     </div>
                 </div>

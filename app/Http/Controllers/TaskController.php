@@ -180,13 +180,30 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        //タスクが完了した
+        //モーダル確認後、タスク完了欄に画像を移動
+        $user_id = Auth::id();
 
+        try {
+            Task::where('user_id', $user_id)
+            ->where('id', $request->task_id)
+            ->where('image_id', $request->image_id)
+            ->where('task_open', '!=', null)
+            ->where('task_expire', '>', date('Y-m-d H:i:s'))
+            ->update([
+                'task_close' => date('Y-m-d H:i:s'),
+            ]);
+        } catch(\Throwable $e) {
+            \Log::error($e);
+            throw $e;
+        }
+
+        return redirect('working')->with('info', 'タスクが完了しました！');
     }
 
     /**
@@ -197,8 +214,7 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
-        //タスクが完了した
-        dd('yeah!');
+        //
     }
 
     /**
