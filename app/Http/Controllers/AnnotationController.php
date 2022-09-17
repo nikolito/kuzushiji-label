@@ -30,6 +30,25 @@ class AnnotationController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param  int  $task_id
+     * @return \Illuminate\Http\Response
+     */
+    public function view($task_id)
+    {
+        //参考Annotation画面にアクセス
+
+        //有効なタスクを抽出
+        $user_id = Auth::id();
+        $target_task = Task::where('id', $task_id)
+        ->where('task_close', '!=', null)
+        ->first();
+
+        return view('view', compact('target_task'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

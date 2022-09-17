@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Task;
 use App\Models\Image;
 use App\Consts\KuzushijiConst;
@@ -29,7 +30,11 @@ class TaskController extends Controller
         ->get(['image_id'])
         ->toArray();
 
-        //タスク完了した画像データを抽出
+        //完了したタスクと画像データを抽出
+        $tasks_finished = Task::where('user_id', '!=', null)
+        ->where('task_close', '!=', null)
+        ->get();
+
         $images_finished = Task::where('user_id', '!=', null)
         ->where('task_close', '!=', null)
         ->get(['image_id'])
@@ -50,7 +55,7 @@ class TaskController extends Controller
 
         $all_images = Image::get(['id'])->count();
 
-        return view('dashboard', compact('free_images', 'all_images'));
+        return view('dashboard', compact('free_images', 'all_images', 'tasks_finished'));
     }
 
     /**
@@ -133,7 +138,7 @@ class TaskController extends Controller
                 return redirect('dashboard')->with('alert', '既に作業が完了した画像のため登録できませんでした。');
             } else {
                 //dashboardにフラッシュメッセージでアラート
-                return redirect('dashboard')->with('alert', '登録済みの作業が' . KuzushijiConst::ACTIVE_TASK_MAX . 'つあります。先に作業を完了させるか、登録解除してください。');
+                return redirect('dashboard')->with('alert', '登録済みの作業が' . KuzushijiConst::ACTIVE_TASK_MAX . 'つあります。先に作業を完了させるか、進捗メニューで登録解除してください。');
             }
         }
     }
@@ -198,12 +203,15 @@ class TaskController extends Controller
             ->update([
                 'task_close' => date('Y-m-d H:i:s'),
             ]);
+
+            return redirect('working')->with('info', '⭐️作業が完了しました！お疲れ様でした⭐️');
         } catch(\Throwable $e) {
             \Log::error($e);
             throw $e;
+
+            return redirect('working')->with('alert', 'エラーのため作業は完了していません。');
         }
 
-        return redirect('working')->with('info', 'タスクが完了しました！');
     }
 
     /**
@@ -240,12 +248,57 @@ class TaskController extends Controller
     }
 
     /**
+     * Reopen a closed task.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reopen(Request $request)
+    {
+        //完了Taskを再開
+        $task_id = (integer) $request->id;
+        $user_id = (integer) $request->user_id;
+
+        $task_count = Task::where('id', $task_id)
+        ->where('user_id', $user_id)
+        ->count();
+
+        if ($task_count === 1) {
+            //update
+            $task_update = Task::where('id', $task_id)
+            ->update([
+                'task_close' => null
+            ]);
+
+            $message = '作業を再開しました。';
+
+            $user = User::where('id', Auth::id())->first();
+            
+            if ($user->user_level !== 1) {
+                return redirect('working')->with('info', $message);
+            } else {
+                return redirect('dashboard')->with('info', $message);
+            }
+
+        } else {
+            $message = 'タスクid: ' . $task_id . 'を再開できませんでした。';
+
+            return redirect('dashboard')->with('alert', $message);
+        }
+    }
+
+    /**
      * Send some message from a form.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function sendMessage(Request $request) {
+        $request->validate([
+            'questions' => 'required',
+            'id' => 'required|integer'
+        ]);
         
+        dd($request->questions);
     }
 }

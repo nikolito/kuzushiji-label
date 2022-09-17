@@ -66,7 +66,7 @@
     </h3>
     <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
-    <div class="ml-8 mr-8 mt-4">
+    <div class="ml-8 mr-8 mt-4 mb-8">
         <h3 class="text-lg font-bold m-4">
             自動保存
         </h3>
@@ -94,31 +94,6 @@
             なお、付箋になった文字は複数入力できますが、最初の1文字が囲みの真横に表示されます。<br>
             作業を仕上げる時に、1文字だけ残してください。
         </p>
-    </div>
-
-    <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
-        質問フォーム
-    </h3>
-    <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
-
-    <div class="ml-8 mr-8 mt-4 h-12">
-        <form action="#" method="POST">
-            @csrf
-            <div class="flex">
-                <div>送信者</div>
-                <div class="ml-8">{{ Auth::user()->name }} ({{Auth::user()->email }}）</div>
-            </div>
-            <div class="flex mt-4">
-                <div>質問内容</div>
-                <textarea class="ml-4" name="questions" rows="8" cols="40"></textarea>
-            </div>
-            <input type="hidden" name="id" value="{{ Auth::id() }}" />
-            <button class="shadow-lg bg-cyan-500 shadow-cyan-500/50 text-white rounded px-2 py-1" type="submit">
-                質問を送る
-            </button>
-        </form>
-    </div>
-
     </div>
 
 </x-app-layout>

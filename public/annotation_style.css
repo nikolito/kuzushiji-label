@@ -8,23 +8,26 @@ body {
   background-color: rgb(2, 0, 36);
 }
 
-/* Display fluffy reminders from the right */
-.fadeRight {
-  animation-name: fadeRightAnime;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards;
-  opacity: 0;
+#comp {
+  background: linear-gradient(135deg, black, rgb(0, 60, 120));
+  background: -webkit-linear-gradient(-45deg, black, rgb(0, 60, 120));
+  background: -moz-linear-gradient(-45deg, black, rgb(0, 60, 120));
+  background-size: 300% 300%;
+
+  animation-name: gradation;
+  animation-duration: 5.0s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
 }
 
-@keyframes fadeRightAnime {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
+@keyframes gradation {
+  0% {
+    background-position: 0% 0%;
   }
 
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  100% {
+    background-position: 100% 100%;
   }
 }
 

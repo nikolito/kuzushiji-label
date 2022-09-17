@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>アノテーション</title>
+    <title>参考アノテーション</title>
     <!-- CSS stylesheet -->
     <link rel="stylesheet" href="{{ asset('annotation_style.css') }}">
     <link rel="stylesheet" href="{{ asset('annotorious-openseadragon-2.7.7/annotorious.min.css') }}">
@@ -25,10 +25,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased text-slate-200 bg-slate-900">
+<body id="comp" class="antialiased text-slate-200" bg-indigo-900>
     @include('layouts.annonavi')
-    <div id="task-state" class="flex fixed z-10 p-4 top-0 left-1/2">
-      <div id="message_saved" class="m-1"></div>
+    <div id="task-state" class="z-10 absolute p-4 top-0 left-1/2">
+        <div id="message_saved" class="m-1"></div>
     </div>
     <header id="header" class="z-20 fixed top-16 right-8 h-16 flex items-center">
         <div class="flex items-center">
@@ -54,19 +54,15 @@
     this_file = this_file.replace('/', '-');
     this_file = this_file.replace('.tif/info.json', '');
 
-    const user_annotation_file = '/storage/users_annos/' + this_file + '-u' + '{{ $target_task->user_id }}' + '.json'; //利用者が作成したデータ
+    //作業完了したデータ
+    const user_annotation_file = '/storage/users_annos/' + this_file + '-u' + '{{ $target_task->user_id }}' + '.json'; 
     const user_annotation_file_url = "{{ config('app.url') }}" + user_annotation_file;
-    const pred_annotation_file = '/storage/pred_annos/' + this_file + '.json'; //翻刻ツール適用済データ
-    const pred_annotation_file_url = "{{ config('app.url') }}" + pred_annotation_file;
-    const base_annotation_file = '/storage/w3c_annos/' + this_file + '.json';
-    const base_annotation_file_url = "{{ config('app.url') }}" + base_annotation_file;
 
     // OpenSeadragon初期化
     window.onload = function() {
       var viewer = OpenSeadragon({
         id: "main",
         preserveViewport: true,
-        disableEditor: false,
         handleRadius: 4,
         prefixUrl: "{{ asset('openseadragon-bin-3.1.0/images') }}/",
         sequenceMode: true,
@@ -77,12 +73,10 @@
 
       // インスタンスの設定
       const config = {
-        widgets: [
-          'TAG',
-          //'COMMENT',
-        ],
-        drawOnSingleClick: true,
+        disableEditor: true,
+        disableSelect: true,
         allowEmpty: true,
+        readOnly: true,
         locale: 'ja',
         formatter: Annotorious.ShapeLabelsFormatter(),
       }
@@ -104,87 +98,12 @@
             anno.loadAnnotations(user_annotation_file_url); //これを優先
             console.log('users_annos file loaded');
           } else {
-            if (localStorage.getItem(this_file) != null) {
-              const str = localStorage.getItem(this_file);
-              const local_json = JSON.parse(str);
-              anno.setAnnotations(local_json);
-              console.log('local storage data loaded');
-            } else if (file_get_contents(pred_annotation_file_url, console.log) != '') {
-              anno.loadAnnotations(pred_annotation_file_url);
-              console.log('auto-annotated data loaded');
-            } else {
-              // pred_annotation_fileがないとき
-              anno.loadAnnotations(base_annotation_file_url);
-              console.log('simple annotated data loaded');
-            }
+            // user_annotation_fileがないとき
+            // モーダルアラート・ログを出してダッシュボードに戻る
+            
+            console.log('Annotated data FAILED loading');
           }
         });
-
-      // アノテーションデータ取得
-      anno.on('createAnnotation', async (annotation) => {
-        console.log(annotation);
-        console.log('created');
-      });
-
-      anno.on('updateAnnotation', async (annotation) => {
-        console.log(annotation);
-        console.log('updated');
-      });
-
-      anno.on('deleteAnnotation', async (annotation) => {
-        console.log(annotation);
-        console.log('deleted');
-      });
-
-      // アノテーションデータ自動保存
-      let intervalId_1 = setInterval(saveWorks, 60000); // 60秒
-
-      var timerId;
-      var mes = document.getElementById('message_saved');
-
-      function setFlashMessage(text) {
-        mes.innerHTML = text;
-      }
-        
-      function startTimer(text) {
-        setFlashMessage(text);
-        timerId = setTimeout(abortTimer, 5000);
-      }
-        
-      function abortTimer() {
-        mes.innerHTML = '';
-      }
-
-      function saveWorks() {
-        let all_data = anno.getAnnotations();
-        localStorage.setItem(this_file, JSON.stringify(all_data));
-
-        // 定期的にファイルにデータ保存
-        let newest_data = JSON.stringify(localStorage.getItem(this_file));
-        let users_data = user_annotation_file_url + 'を保存しました';
-
-        // サーバにデータを投げる（TODO）
-        const formData = new FormData();
-        formData.append('file_name', user_annotation_file_url)
-        formData.append('json_data', newest_data);
-        formData.append('users_info', users_data);
-
-        fetch("{{ config('app.url') }}/request.php", {
-            method: 'POST',
-            body: formData,
-            credentials: 'same-origin',
-          })
-          .then(response => response.text())
-          .then(res => { //サーバ側からの出力
-            console.log(res);
-            startTimer('保存しました👍');
-          })
-          .catch(error => {
-            console.log(error);
-            startTimer('!!保存できていません!!');
-          })
-      }
-
     }
     </script>
 

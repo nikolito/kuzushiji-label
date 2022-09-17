@@ -34,17 +34,30 @@ Route::get('/working', 'App\Http\Controllers\TaskController@show')
 Route::post('/working/delete', 'App\Http\Controllers\TaskController@destroy')
 ->middleware(['verified'])->name('working_delete');
 
+Route::post('/working/finished', 'App\Http\Controllers\TaskController@edit')
+->middleware(['verified'])->name('working_finished');
+
+Route::post('/working/reopen', 'App\Http\Controllers\TaskController@reopen')
+->middleware(['verified'])->name('working_reopen');
+
 Route::get('/annotation', 'App\Http\Controllers\AnnotationController@index')
 ->middleware(['verified'])->name('annotation');
 
 Route::get('/annotation/{task_id}/{image_id}', 'App\Http\Controllers\AnnotationController@show')
 ->middleware(['verified'])->name('annotation_task');
 
-Route::post('/working/finished', 'App\Http\Controllers\TaskController@edit')
-->middleware(['verified'])->name('working_finished');
+Route::get('/view/{task_id}', 'App\Http\Controllers\AnnotationController@view')
+->middleware(['verified'])->name('view');
 
 Route::get('/help', function () {
     return view('help');
 })->middleware(['verified'])->name('help');
+
+Route::get('/message', function () {
+    return view('message');
+})->middleware(['verified'])->name('message');
+
+Route::post('/contact', 'App\Http\Controllers\TaskController@sendMessage')
+->middleware(['verified'])->name('contact');
 
 require __DIR__.'/auth.php';
