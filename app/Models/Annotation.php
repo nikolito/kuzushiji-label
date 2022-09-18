@@ -15,7 +15,7 @@ class Annotation extends Model
     ];
 
     public function task() {
-        return $this->belongsTo(Task::class, 'task_id'):
+        return $this->belongsTo(Task::class, 'task_id');
     }
 
     public function workFile() {

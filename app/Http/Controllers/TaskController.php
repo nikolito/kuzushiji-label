@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Task;
 use App\Models\Image;
 use App\Consts\KuzushijiConst;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactToSiteOwner;
 
 class TaskController extends Controller
 {
@@ -298,7 +300,13 @@ class TaskController extends Controller
             'questions' => 'required',
             'id' => 'required|integer'
         ]);
-        
-        dd($request->questions);
+
+        $id = $request->id;
+        $questions = $request->questions;
+
+        Mail::send(new ContactToSiteOwner($id, $questions));
+
+        session()->flash('info', 'メールを送信しました。');
+        return back();
     }
 }
