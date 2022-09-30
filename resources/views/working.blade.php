@@ -67,12 +67,9 @@
                             </div>
                             <div class="flex justify-center">
                                 <div class="mt-8">
-                                    <form method="POST" action="{{ route('working_finished') }}"> 
-                                        @csrf
-                                        <input type="hidden" name="task_id" value="{{ $task->id }}" />
-                                        <input type="hidden" name="image_id" value="{{ $task->image->id }}" />
-                                        <button class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold">作業を完了</button>
-                                    </form>
+                                    <a data-micromodal-trigger="modal-finished-{{ $count }}" type="button" href='javascript:;' alt="作業を完了" class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold">
+                                        作業を完了
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -102,6 +99,38 @@
                                         @method('POST')
                                         <input type="hidden" name="id" value="{{ $task->image_id }}" />
                                         <button class="modal__btn modal__btn-primary">本当に解除する</button>
+                                    </form>
+                                    <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">キャンセル</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 完了確認モーダル --}}
+                    <div class="modal micromodal-slide" id="modal-finished-{{ $count }}" aria-hidden="true">
+                        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                                <header class="modal__header">
+                                    <h2 class="modal__title" id="modal-1-title">
+                                        画像 {{ basename($json_image->{'@id'}) }} のアノテーションを完了します。
+                                    </h2>
+                                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                                </header>
+                                <main class="modal__content" id="modal-1-content">
+                                    <div>
+                                        <img src="{{ $iiif_image }}/full/full/0/default.jpg" class="rounded" style="width: 80vw;" />
+                                    </div>
+                                    <p>
+                                        自分が担当し完了した画面は、×ボタンを押せば完了を取り消しできます。
+                                    </p>
+                                </main>
+                                <footer class="modal__footer flex gap-x-4">
+                                    <form method="POST" action="{{ route('working_finished') }}">
+                                        @csrf
+                                        @method('POST')
+                                        <input type="hidden" name="task_id" value="{{ $task->id }}" />
+                                        <input type="hidden" name="image_id" value="{{ $task->image->id }}" />
+                                        <button class="modal__btn modal__btn-primary">完了する</button>
                                     </form>
                                     <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">キャンセル</button>
                                 </footer>

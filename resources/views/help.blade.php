@@ -11,7 +11,7 @@
     <div class="py-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h3 class="ml-8 mb-1 font-semibold text-xl text-cyan-400 leading-tight">
-                ダッシュボード
+                1. ダッシュボードで担当する画像を選ぶ
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
@@ -23,7 +23,7 @@
                     ブラウザ画面からログインすると、選択できる画像が表示されています。<br>
                     「選択」ボタンを押してください。<br>
                     画像のプレビューが出てくるので、「作業を始める」または「止める」ボタンを押してください。<br>
-                    作業は {{ KuzushijiConst::TASK_DAY_LIMIT }} 日以内に完了してください。<br>
+                    作業は<span class="text-orange-500 font-bold"> {{ KuzushijiConst::TASK_DAY_LIMIT }} 日以内</span>に完了してください。<br>
                     期限内に「進捗」メニューで担当画像に対し、「完了」ボタンが押されていないときは、自動的にダッシュボードに再表示され、他の人が担当できるようになります。
                 </p>
 
@@ -40,7 +40,7 @@
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
-                進捗
+                2. 進捗で担当画像の一覧や有効期限を確認してアノテーションする作業画面を開く
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
@@ -64,7 +64,7 @@
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
-                アノテーション
+                3. アノテーション作業を進める（有効期限に注意！）
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
@@ -73,7 +73,7 @@
                     自動保存
                 </h3>
                 <p class="m-4">
-                    アノテーション（＝囲みに文字を当てる作業）画面では<span class="text-orange-500 font-bold">1分に1度</span>、作業データを自動で保存します。<br>
+                    アノテーション（＝囲みに文字を当てる作業）画面では<span class="text-orange-500 font-bold">{{ (KuzushijiConst::ANNO_SAVE_INTERVAL) / 1000 }}秒に1度</span>、作業データを自動で保存します。<br>
                     <span class="text-orange-500 font-bold">インターネットに常時接続できる環境での作業をお願いします。</span>
                 </p>
 

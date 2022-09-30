@@ -12,7 +12,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-8 bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    取り組みたい文書画面を選んでください。「作業中」ページに登録できる画像は最大 {{ KuzushijiConst::ACTIVE_TASK_MAX }} 枚までです。<br>
+                    取り組みたい文書画面を選んでください。「進捗」ページに登録できる画像は最大 {{ KuzushijiConst::ACTIVE_TASK_MAX }} 枚までです。<br>
                     作業が完了すると新しい画像を選べます。
                 </div>
             </div>
@@ -39,7 +39,7 @@
                         $iiif_image = $json_image->{'@id'};
                         $count = $count + 1;
                     @endphp
-                    <div class="p-1 lg:w-1/6 md:w-1/5 w-full m-2">
+                    <div class="p-1 lg:w-1/5 md:w-1/5 w-full m-2">
                         <div class="h-full border-cyan-400 border-2 p-4 rounded-lg">
                             <p class="font-bold text-center text-cyan-400 text-sm mb-4">{{ $json->attribution }}</p>
                             <div class="flex justify-center gap-x-4">

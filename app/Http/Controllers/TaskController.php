@@ -52,6 +52,7 @@ class TaskController extends Controller
 
         //タスク予約されていない画像idを抽出
         $free_images = Image::whereNotIn('id', $imageids)
+        ->orderBy('image_url', 'asc')
         ->limit($image_limit)
         ->get();
 

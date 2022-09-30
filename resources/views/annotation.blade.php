@@ -137,7 +137,7 @@
       });
 
       // アノテーションデータ自動保存
-      let intervalId_1 = setInterval(saveWorks, 60000); // 60秒
+      let intervalId_1 = setInterval(saveWorks, {{ KuzushijiConst::ANNO_SAVE_INTERVAL }});
 
       var timerId;
       var mes = document.getElementById('message_saved');
