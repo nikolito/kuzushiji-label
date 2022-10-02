@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-white-800 leading-tight">
@@ -48,7 +49,21 @@
                                     </svg>
                                 </a>
                                 <div class="text-sm text-red-200 p-1">
-                                    有効期限　{{ $task->task_expire }}
+                                    @php 
+                                        $valid_date = new DateTime($task->task_expire); 
+                                        $now = new DateTime();
+                                        $task_date = Carbon::parse($task->task_expire);
+                                        $now_carbon = Carbon::now();
+                                    @endphp
+
+                                    @if ($now->modify('+1 days') > $valid_date) 
+                                        <span
+                                        class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                                            あと1日以内です
+                                        </span><br>
+                                    @endif 
+                                    有効期限　
+                                    {{ $task_date->diffForHumans($now_carbon) }}
                                 </div>
                             </div>
 
@@ -150,7 +165,7 @@
                 @if (count($tasks_finished) < 1)
                     <div class="m-8 border-blue-800 bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-1/2">
-                            進行中の作業はありません。
+                            完了した作業はありません。
                         </div>
                     </div>
                 @else

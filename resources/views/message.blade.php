@@ -38,7 +38,7 @@
                         <button class="mt-4 shadow-lg bg-cyan-400 shadow-cyan-500/50 text-slate-700 font-bold rounded px-2 py-1" type="submit">
                             質問を送る
                         </button>
-                        <p class="p-4 text-sm text-cyan-300 font-bold">（すぐに送信します。内容をよく確認してください。）</p>
+                        <p class="p-4 text-sm text-cyan-300 font-bold">（確認画面は出さずにすぐに送信します。内容をよく確認してください。）</p>
                     </div>
                 </form>
             </div>

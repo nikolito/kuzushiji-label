@@ -37,6 +37,13 @@
                     サーバには一つの画像に対し、各人が作成したデータが残ります。そのうち<span class="text-orange-500 font-bold">「完了」とされたデータが正解データ（候補）として採用されます。</span><br>
                     したがって、<span class="text-orange-500 font-bold">画像に対するアノテーションが全て終わったら、必ず「完了」ボタンを押してください。</span>
                 </p>
+
+                <h3 class="text-lg font-bold m-4">
+                    アノテーションが「完了」した画像を参考にする
+                </h3>
+                <p class="m-4">
+                    ダッシュボードの画面下部に、アノテーションが完了した画像の一覧が表示されます。具体的なアノテーションの例としてご活用ください。
+                </p>
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
@@ -64,17 +71,25 @@
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
-                3. アノテーション作業を進める（有効期限に注意！）
+                3. アノテーション作業を進める（保存状態と有効期限に注意！）
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
             <div class="ml-8 mr-8 mt-4 mb-8">
                 <h3 class="text-lg font-bold m-4">
-                    自動保存
+                    手動・自動保存
                 </h3>
                 <p class="m-4">
-                    アノテーション（＝囲みに文字を当てる作業）画面では<span class="text-orange-500 font-bold">{{ (KuzushijiConst::ANNO_SAVE_INTERVAL) / 1000 }}秒に1度</span>、作業データを自動で保存します。<br>
-                    <span class="text-orange-500 font-bold">インターネットに常時接続できる環境での作業をお願いします。</span>
+                    アノテーション（＝囲みに文字を当てる作業）画面では<span class="text-orange-500 font-bold">{{ (KuzushijiConst::ANNO_SAVE_INTERVAL) / 1000 }}秒に1度</span>、作業データをサーバ上に自動で保存します。<br>
+                    <span class="text-orange-500 font-bold">インターネットに常時接続できる環境での作業をお願いします。</span><br>
+                    保存ボタンを押しても同様にサーバ上に保存できます。
+                </p>
+
+                <h3 class="text-lg font-bold m-4">
+                    アノテーションを始める前に
+                </h3>
+                <p class="m-4">
+                    ブラウザの動作を確認するため、試しに1文字ほどデータを変更し、保存ボタンを押して「保存しました👍」の表示が画面上部に現れてから、一旦別のページに戻り、その後アノテーションのページに戻って<span class="text-orange-500 font-bold">作業したデータの保存状態を確認してください。</span>保存するタイミングの前に別のページに行くと、変更したデータが修正されないことがあります。
                 </p>
 
                 <h3 class="text-lg font-bold m-4">
@@ -90,11 +105,29 @@
                     1文字当ての編集
                 </h3>
                 <p class="m-4">
-                    編集したい囲みを選んで、ダイアログボックスを出します。上段に「Add tag...」という欄をクリックすると文字を入力できます。文字を入力してリターンキーを押すと、付箋のようになります。<br>
+                    編集したい囲みを選んで、ダイアログボックスを出します。「Add tag...」という欄をクリックすると文字を入力できます。文字を入力してリターンキーを押すと、付箋のようになります。<br>
                     確定する場合はOk、取り消す場合はCancelボタンを押してください。<br>
-                    付箋（タグ）になった文字を消したい時は、付箋を選び×印をクリックしてください。付箋が消えます。この操作を確定する時はOk、取り消す時はCancelボタンを入力します。<br>
+                    付箋（タグ）になった文字を消したい時は、付箋をクリックで選び×印をクリックしてください。付箋が消えます。この操作を確定する時はOk、取り消す時はCancelボタンを入力します。<br>
                     なお、付箋になった文字は複数入力できますが、最初の1文字が囲みの真横に表示されます。<br>
                     作業を仕上げる時に、1文字だけ残してください。
+                </p>
+                <p class="m-4">
+                    旧字体での表記は<span class="text-orange-500 font-bold">新字体</span>でラベリングしてください。<br>
+                    例えば、「舊（旧の旧字体）」は「旧」でお願いします。
+                </p>
+            </div>
+
+            <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
+                4. そのほか
+            </h3>
+            <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
+
+            <div class="ml-8 mr-8 mt-4 mb-8">
+                <h3 class="text-lg font-bold m-4">
+                    エラー画面が出た場合・わからないことなどがある時
+                </h3>
+                <p class="m-4">
+                    <a href="{{ route('message') }}" class="text-orange-500 font-bold">連絡のページ</a>から管理者に連絡してください。
                 </p>
             </div>
         </div>

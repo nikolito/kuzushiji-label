@@ -18,6 +18,24 @@
                     <x-nav-link :href="route('help')" :active="request()->routeIs('help')">
                         {{ __('Help') }}
                     </x-nav-link>
+                    <x-dropdown align="right">
+                        <x-slot name="trigger">
+                            <button class="mt-6 w-30 h-6 flex items-center text-sm font-medium text-white-500 hover:text-white-700 hover:border-white-300 focus:outline-none focus:text-white-700 focus:border-white-300 transition duration-150 ease-in-out">
+                                <div>{{ __('Links') }}</div>
+
+                                <div class="ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <a href="https://crch.dl.saga-u.ac.jp/nikki/" target="_blank" class="p-2 text-sm text-black important">小城藩日記データベース</a>
+                            <a href="http://codh.rois.ac.jp/char-shape/search/" target="_blank" class="p-2 text-sm text-black important">CODHくずし字検索</a>
+                        </x-slot>
+                    </x-dropdown>
                     <x-nav-link>
                         {{ basename(str_replace('/info.json', '', $target_task->image->image_url)) }}を表示中
                     </x-nav-link>

@@ -28,12 +28,15 @@
 <body class="antialiased text-slate-200 bg-slate-900">
     @include('layouts.annonavi')
     <div id="task-state" class="flex fixed z-10 p-4 top-0 left-1/2">
-      <div id="message_saved" class="m-1"></div>
+      <div id="message_saved" class="m-1 bg-black"></div>
     </div>
     <header id="header" class="z-20 fixed top-16 right-8 h-16 flex items-center">
         <div class="flex items-center">
             <button id="label_button" type="button" class="w-38 h-8 m-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-md px-2 py-1 text-center">
                 ラベルON/OFF
+            </button>
+            <button id="save_button" type="button" class="w-38 h-8 m-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-md px-2 py-1 text-center">
+                保存
             </button>
         </div>
     </header>
@@ -136,6 +139,10 @@
         console.log('deleted');
       });
 
+      // アノテーションデータ手動保存
+      let saveBtn = document.getElementById('save_button');
+      saveBtn.addEventListener('click', saveWorks);
+
       // アノテーションデータ自動保存
       let intervalId_1 = setInterval(saveWorks, {{ KuzushijiConst::ANNO_SAVE_INTERVAL }});
 
@@ -189,16 +196,16 @@
     </script>
 
     <script>
-        //label visibility
-    const btn = document.getElementById("label_button");
-    const labels = document.getElementsByTagName('foreignObject');
-    const toggle_labels = () => {
-      for (let i = 0; i < labels.length; i++) {
-        labels[i].classList.toggle("hidden");
+      //label visibility
+      const btn = document.getElementById("label_button");
+      const labels = document.getElementsByTagName('foreignObject');
+      const toggle_labels = () => {
+        for (let i = 0; i < labels.length; i++) {
+          labels[i].classList.toggle("hidden");
+        }
       }
-    }
 
-    btn.addEventListener('click', toggle_labels);
+      btn.addEventListener('click', toggle_labels);
     </script>
 
 </body>
