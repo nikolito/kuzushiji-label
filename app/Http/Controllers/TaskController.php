@@ -24,6 +24,7 @@ class TaskController extends Controller
         //ダッシュボードでのタスク候補画像表示
         //ダッシュボードに表示できる画像数
         $image_limit = KuzushijiConst::DASHBOARD_LIMIT;
+        $tasks_finished_limit = KuzushijiConst::TASK_FINISHED;
 
         // タスク予約済みのデータを抽出
         $images_reserved = Task::where('user_id', '!=', null)
@@ -35,6 +36,7 @@ class TaskController extends Controller
         //完了したタスクと画像データを抽出
         $tasks_finished = Task::where('user_id', '!=', null)
         ->where('task_close', '!=', null)
+        ->orderBy('task_close', 'desc')
         ->get();
 
         $images_finished = Task::where('user_id', '!=', null)
@@ -310,4 +312,90 @@ class TaskController extends Controller
         session()->flash('info', 'メールを送信しました。');
         return back();
     }
+
+    /**
+     * Display lists and search the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function find(Request $request)
+    {
+        // タスク予約済みのデータを抽出
+        $images_reserved = Task::where('user_id', '!=', null)
+        ->where('task_close', null)
+        ->where('task_expire', '>', date('Y-m-d H:i:s'))
+        ->get(['image_id'])
+        ->toArray();
+
+        // //完了したタスクと画像データを抽出
+        $tasks_finished = Task::where('user_id', '!=', null)
+        ->where('task_close', '!=', null)
+        ->orderBy('task_close', 'desc')
+        ->get();
+
+        $images_finished = Task::where('user_id', '!=', null)
+        ->where('task_close', '!=', null)
+        ->get(['image_id'])
+        ->toArray();
+
+        $images_not_available = array_merge($images_reserved, $images_finished);
+
+        // //タスク予約済みの画像idを抽出
+        $imageids = [];
+        foreach($images_not_available as $array) {
+            $imageids[] = $array['image_id'];
+        }
+
+        // //タスク予約されていない画像idを抽出
+        $free_images = Image::whereNotIn('id', $imageids)
+        ->orderBy('image_url', 'asc')
+        ->get();
+
+        $all_images = Image::limit(3)->get(); //pagenation
+
+        return view('search', compact('free_images', 'all_images', 'tasks_finished'));
+    }
+
+    public function search(Request $request)
+    {
+        $keywords = $request->keywords;
+        //$anno_condition = $request->anno_condition;
+        
+        $images = Image::where('image_url', 'like', '%'.$keywords.'%')
+        ->orderBy('image_url', 'asc')
+        ->get();
+
+        // if ($anno_condition === 'finished') {
+        //     $tasks = Task::where('user_id', 'like', '%' . $keywords . '%')
+        //     ->where('task_closed', '!=', '')
+        //     ->get();
+        // } else if ($anno_condition === 'unfinished') {
+        //     $tasks = Task::where('user_id', 'like', '%' . $keywords . '%')
+        //     ->where('task_closed', '=', '')
+        //     ->get();
+        // } else {
+        //     $tasks = Task::where('user_id', 'like', '%' . $keywords . '%')
+        //     ->get();
+        // }
+
+        $list = [];
+        foreach($images as $image) {
+            $json = json_decode(file_get_contents($image->manifest_url));
+            $json_image = json_decode(file_get_contents($image->image_url));
+            $iiif_image = $json_image->{'@id'};
+
+            $list[] = array(
+                'id' => $image->id,
+                'manifest_url' => $image->manifest_url,
+                'image_url' => $image->image_url,
+                'organization' => $json->label,
+                'book_name' => $json->metadata[0]->value,
+                'image_file' =>  basename($json_image->{'@id'})
+            );
+        }
+        
+        header('Content-type: application/json');
+        echo json_encode($list, JSON_UNESCAPED_UNICODE);
+    }
+
 }

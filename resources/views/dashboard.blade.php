@@ -92,7 +92,7 @@
             </div>
 
             <h3 class="mt-8 ml-8 mb-1 font-semibold text-xl text-cyan-400 leading-tight">
-                作業完了した画像 {{ count($tasks_finished) }} 枚
+                作業完了した画像 {{ count($tasks_finished) }} 枚（最新の{{ KuzushijiConst::TASK_FINISHED }}枚を表示）
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
@@ -104,13 +104,14 @@
                         </div>
                     </div>
                 @else
-                    @php $count = 0; @endphp
+                    @php $count2 = 0; @endphp
                     @foreach ($tasks_finished as $task_finished)
                     @php //manifestから基本情報取得
                         $json_finished = json_decode(file_get_contents($task_finished->image->manifest_url));
                         $json_image_finished = json_decode(file_get_contents($task_finished->image->image_url));
                         $iiif_image_finished = $json_image_finished->{'@id'};
-                        $count = $count + 1;
+                        $count2 = $count2 + 1;
+                        if ($count2 > KuzushijiConst::TASK_FINISHED) break;
                     @endphp
                     <div class="p-1 lg:w-1/4 md:w-1/5 w-full m-2">
                         <div class="h-full border-blue-400 border-2 p-4 rounded-lg">

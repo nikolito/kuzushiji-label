@@ -102,8 +102,10 @@
 
       // users_annosにデータがあれば最優先で使用する
       fetch(user_annotation_file_url)
-        .then(response => {
-          if (response.ok) {
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data);
+          if (data.length > 0) {
             anno.loadAnnotations(user_annotation_file_url); //これを優先
             console.log('users_annos file loaded');
           } else {
