@@ -18,7 +18,7 @@
             </div>
 
             <h3 class="ml-8 mb-1 font-semibold text-xl text-cyan-400 leading-tight">
-                選択できる画像 {{ count($free_images) }} 枚　総画像 {{ $all_images }} 枚
+                選択できる画像 {{ count($free_images) }} 枚　総画像 {{ count($all_images) }} 枚
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 

@@ -26,18 +26,19 @@ class TaskController extends Controller
         $image_limit = KuzushijiConst::DASHBOARD_LIMIT;
         $tasks_finished_limit = KuzushijiConst::TASK_FINISHED;
 
+        //完了したタスクと画像データを抽出
+        $tasks_finished = Task::with('image')
+        ->where('user_id', '!=', null)
+        ->where('task_close', '!=', null)
+        ->orderBy('task_close', 'desc')
+        ->get();
+
         // タスク予約済みのデータを抽出
         $images_reserved = Task::where('user_id', '!=', null)
         ->where('task_close', null)
         ->where('task_expire', '>', date('Y-m-d H:i:s'))
         ->get(['image_id'])
         ->toArray();
-
-        //完了したタスクと画像データを抽出
-        $tasks_finished = Task::where('user_id', '!=', null)
-        ->where('task_close', '!=', null)
-        ->orderBy('task_close', 'desc')
-        ->get();
 
         $images_finished = Task::where('user_id', '!=', null)
         ->where('task_close', '!=', null)
@@ -58,7 +59,7 @@ class TaskController extends Controller
         ->limit($image_limit)
         ->get();
 
-        $all_images = Image::get(['id'])->count();
+        $all_images = Image::get(['id']);
 
         return view('dashboard', compact('free_images', 'all_images', 'tasks_finished'));
     }
@@ -172,14 +173,16 @@ class TaskController extends Controller
         $user_id = Auth::id();
 
         //選択中の画像一覧を送る
-        $tasks = Task::where('user_id', $user_id)
+        $tasks = Task::with('image')
+        ->where('user_id', $user_id)
         ->where('task_open', '!=', null)
         ->where('task_expire', '>', date('Y-m-d H:i:s'))
         ->where('task_close', null)
         ->orderBy('id', 'asc')
         ->get();
 
-        $tasks_finished = Task::where('user_id', $user_id)
+        $tasks_finished = Task::with('image')
+        ->where('user_id', $user_id)
         ->where('task_close', '!=', null)
         ->orderBy('id', 'asc')
         ->get();

@@ -4,6 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="600"><!--リロード-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>アノテーション</title>
@@ -96,32 +97,34 @@
       //urlファイル存在チェック関数
       async function file_get_contents(uri, callback) {
         let res = await fetch(uri),
-            ret = await res.text(); 
+            ret = await res.json(); 
         return callback ? callback(ret) : ret; // a Promise() actually.
       }
 
       // users_annosにデータがあれば最優先で使用する
       fetch(user_annotation_file_url)
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          if (data.length > 0) {
-            anno.loadAnnotations(user_annotation_file_url); //これを優先
-            console.log('users_annos file loaded');
+        .then(response => {
+          //失敗
+          if(!response.ok) {
+            throw new Error(response.statusText);
+          }
+          //成功
+          anno.loadAnnotations(user_annotation_file_url); //これを優先
+          console.log('users_annos file loaded');
+        })
+        .catch(error => {
+          if (localStorage.getItem(this_file) != null) {
+            const str = localStorage.getItem(this_file);
+            const local_json = JSON.parse(str);
+            anno.setAnnotations(local_json);
+            console.log('local storage data loaded');
+          } else if (file_get_contents(pred_annotation_file_url, console.log) != '') {
+            anno.loadAnnotations(pred_annotation_file_url);
+            console.log('auto-annotated data loaded');
           } else {
-            if (localStorage.getItem(this_file) != null) {
-              const str = localStorage.getItem(this_file);
-              const local_json = JSON.parse(str);
-              anno.setAnnotations(local_json);
-              console.log('local storage data loaded');
-            } else if (file_get_contents(pred_annotation_file_url, console.log) != '') {
-              anno.loadAnnotations(pred_annotation_file_url);
-              console.log('auto-annotated data loaded');
-            } else {
-              // pred_annotation_fileがないとき
-              anno.loadAnnotations(base_annotation_file_url);
-              console.log('simple annotated data loaded');
-            }
+            // pred_annotation_fileがないとき
+            anno.loadAnnotations(base_annotation_file_url);
+            console.log('simple annotated data loaded');
           }
         });
 

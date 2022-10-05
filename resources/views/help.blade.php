@@ -86,6 +86,15 @@
                 </p>
 
                 <h3 class="text-lg font-bold m-4">
+                    自動ログアウト・アノテーション画面の自動リロード
+                </h3>
+                <p class="m-4">
+                    異なるブラウザやコンピュータをお使いの場合は、使用しない画面を閉じてから、新しい画面で作業を始めてください。<br>
+                    データの整合性を保つため、元の画面を開いたまま、別の端末やブラウザでログインすると、最後に開いた画面を除いた全ての画面はログアウト状態になります。<br>
+                    また、アノテーション画面も同様の理由で<span class="text-orange-500 font-bold">10分に1度</span>自動でリロードしてログアウト状態かどうか確認します。<br>
+                </p>
+
+                <h3 class="text-lg font-bold m-4">
                     【重要】アノテーションを始める前に
                 </h3>
                 <p class="m-4">
@@ -115,6 +124,9 @@
                     旧字体での表記は<span class="text-orange-500 font-bold">新字体</span>でラベリングしてください。<br>
                     例えば、「舊（旧の旧字体）」は「旧」でお願いします。
                 </p>
+                <p class="m-4">
+                    なるべく囲みは他の文字の一部に重ならないようにしてください。
+                </p>
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
@@ -127,7 +139,13 @@
                     エラー画面が出た場合・わからないことなどがある時
                 </h3>
                 <p class="m-4">
-                    <a href="{{ route('message') }}" class="text-orange-500 font-bold">連絡のページ</a>から管理者に連絡してください。
+                    エラーページが出た場合は、ロゴ<img src="{{ asset('logo.png') }}" class="inline w-8 align-middle">をクリックしてください。ホーム画面に移ります。
+                </p>
+                <p class="m-4">
+                    わからないことがある時は、<a href="{{ route('message') }}" class="text-orange-500 font-bold">連絡のページ</a>から管理者に連絡してください。
+                </p>
+                <p class="m-4">
+                    ログアウトの下にある「ローカルストレージを消去」は、このサイトのアノテーション用に作られる一時的なデータを一括して消去するために使います。
                 </p>
             </div>
         </div>

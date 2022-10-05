@@ -53,6 +53,15 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+                        <script>
+                            function remove_localstorage() {
+                                localStorage.clear();
+                            }
+                        </script>
+                        <x-dropdown-link
+                                onclick="remove_localstorage();">
+                            ローカルストレージを消去
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>

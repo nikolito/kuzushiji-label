@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         //$this->call(ImageSeeder::class);
         $this->call(AddImagesCsv::class);
-        $this->call(TaskSeeder::class);
+        //$this->call(TaskSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
