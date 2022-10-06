@@ -106,6 +106,7 @@
         .then(response => {
           //失敗
           if(!response.ok) {
+            console.log(response.statusText);
             throw new Error(response.statusText);
           }
           //成功

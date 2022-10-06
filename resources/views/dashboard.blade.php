@@ -12,8 +12,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-8 bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    取り組みたい文書画面を選んでください。「進捗」ページに登録できる画像は最大 {{ KuzushijiConst::ACTIVE_TASK_MAX }} 枚までです。<br>
-                    作業が完了すると新しい画像を選べます。
+                    <p class="mb-4">
+                        <span
+                            class="inline-flex items-center justify-center px-2 py-1 mr-2 text-sm font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                            お知らせ
+                        </span>
+                        しばらくの間、開発と運用を同時に進めます。動作に不具合が起きることがありますがご了承ください🙏
+                    </p>
+                    <hr width="50%" class="mx-auto border-dotted border-cyan-400">
+                    <p class="mt-4">取り組みたい文書画面を選んでください。「進捗」ページに登録できる画像は最大 {{ KuzushijiConst::ACTIVE_TASK_MAX }} 枚までです。<br>
+                    作業が完了すると新しい画像を選べます。</p>
                 </div>
             </div>
 

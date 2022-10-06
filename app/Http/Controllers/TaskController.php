@@ -132,10 +132,10 @@ class TaskController extends Controller
             ]);
 
             //選択中の画像一覧を送る
-            $taskfiles = Task::where('user_id', $user_id)
-            ->orderBy('task_open', 'asc')
-            ->where('task_expire', '>', date('Y-m-d H:i:s'))
-            ->get();
+            // $taskfiles = Task::where('user_id', $user_id)
+            // ->orderBy('task_open', 'asc')
+            // ->where('task_expire', '>', date('Y-m-d H:i:s'))
+            // ->get();
 
             //workingにフラッシュメッセージを出す
             return redirect('working')->with('info', '作業を登録しました。よろしくお願いします。');

@@ -11,7 +11,7 @@
     <div class="py-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h3 class="ml-8 mb-1 font-semibold text-xl text-cyan-400 leading-tight">
-                1. ダッシュボードで担当する画像を選ぶ
+                <span class="text-3xl font-bold">1.</span> ダッシュボードで担当する画像を選ぶ
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
@@ -47,7 +47,7 @@
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
-                2. 進捗で担当画像の一覧や有効期限を確認してアノテーションする作業画面を開く
+                <span class="text-3xl font-bold">2.</span> 進捗で担当画像の一覧や有効期限を確認してアノテーションする作業画面を開く
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
@@ -71,11 +71,24 @@
             </div>
 
             <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
-                3. アノテーション作業を進める（保存状態と有効期限に注意！）
+                <span class="text-3xl font-bold">3.</span> アノテーション作業を進める（保存状態と有効期限に注意！）
             </h3>
             <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
 
             <div class="ml-8 mr-8 mt-4 mb-8">
+                <h3 class="text-lg font-bold m-4">
+                    <span
+                        class="inline-flex items-center justify-center px-2 py-1 mr-2 text-md font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                        重要
+                    </span>
+                    アノテーションを始める前に
+                </h3>
+                <p class="m-4">
+                    通信状態とブラウザの動作を確認するため、試しに1文字ほどデータを変更し、保存ボタンを押して「保存しました👍」の表示が画面上部に現れてから、一旦別のページに戻り、その後アノテーションのページに戻って<span class="text-orange-500 font-bold">作業したデータの保存状態を確認してください。</span><br>
+                    変更前の文字に戻ってしまう場合は、ブラウザのキャッシュを消去して、画面を再読み込みしてください。<br>
+                    それでもうまくいかない場合は<a href="{{ route('message') }}" class="text-orange-500 font-bold">管理者に連絡</a>してください。
+                </p>
+
                 <h3 class="text-lg font-bold m-4">
                     手動・自動保存
                 </h3>
@@ -95,19 +108,31 @@
                 </p>
 
                 <h3 class="text-lg font-bold m-4">
-                    【重要】アノテーションを始める前に
+                    <span
+                        class="inline-flex items-center justify-center px-2 py-1 mr-2 text-md font-bold leading-none text-red-600 bg-red-100 rounded-full">
+                        TIPS
+                    </span>
+                    アノテーションするときはリンク先のデータベースをフル活用してください
                 </h3>
                 <p class="m-4">
-                    ブラウザの動作を確認するため、試しに1文字ほどデータを変更し、保存ボタンを押して「保存しました👍」の表示が画面上部に現れてから、一旦別のページに戻り、その後アノテーションのページに戻って<span class="text-orange-500 font-bold">作業したデータの保存状態を確認してください。</span>保存するタイミングの前に別のページに行くと、変更したデータが修正されていないように見えることがあります。変更が反映されないときは、ブラウザのリロードを何度かお試しください。
+                    画像にアノテーションする画面では、リンク集がメニューに現れます。
+                    リンク先のデータベース機能を使うと、作業が捗ります。<br>
+                    <b>例）</b>小城藩日記データベースで、アノテーションに含まれていそうなキーワードを入力して似た記事文がないか探します。
+                    似た文章を見つけたら、記事文の後に付いている<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-6 h-6 inline text-cyan-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                    </svg>マークをクリックして、各記事文の詳細を表示する小窓を出してください。
+                    探している記事の前後にもアノテーションに使える記事文が並んでいることがよくあります。
                 </p>
 
                 <h3 class="text-lg font-bold m-4">
                     囲みの編集
                 </h3>
                 <p class="m-4">
-                    囲みの位置や大きさを変える：囲みを直接クリックし、赤丸ハンドルをドラッグします。また、囲みの中身をクリックして動かします。<br>
-                    囲みを消す：囲みをクリックし、ダイアログを出して、ゴミ箱アイコンをクリックしてください。<br>
-                    新しい囲みを作る：<span class="text-orange-500 font-bold">シフトキーを押しながら</span>、囲みたい文字の左上から右下にドラッグすると新しい囲みができます。<br>
+                    <b>囲みの位置や大きさを変える</b>：囲みを直接クリックし、赤丸ハンドルをドラッグします。また、囲みの中身をクリックして動かします。<br>
+                    <b>囲みを消す</b>：囲みをクリックし、ダイアログを出して、ゴミ箱アイコンをクリックしてください。<br>
+                    <b>新しい囲みを作る</b>：<span class="text-orange-500 font-bold">シフトキーを押しながら</span>、囲みたい文字の左上から右下にドラッグすると新しい囲みができます。<br>
                 </p>
 
                 <h3 class="text-lg font-bold m-4">
@@ -121,7 +146,7 @@
                     作業を仕上げる時に、1文字だけ残してください。
                 </p>
                 <p class="m-4">
-                    旧字体での表記は<span class="text-orange-500 font-bold">新字体</span>でラベリングしてください。<br>
+                    旧字体や異体字での表記は<span class="text-orange-500 font-bold">新字体</span>でラベリングしてください。<br>
                     例えば、「舊（旧の旧字体）」は「旧」でお願いします。
                 </p>
                 <p class="m-4">
