@@ -18,10 +18,10 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        // Prefix を判断して言語切替
-        $route = Route::getCurrentRoute();
-        $lang = $route->parameter('lang', 'ja');
-        App::setLocale($lang);
+        // 言語切替
+        if (session()->has('locale')) {
+            app()->setLocale(session('locale'));
+        }
 
         return $next($request);
     }

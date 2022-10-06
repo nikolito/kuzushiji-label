@@ -15,29 +15,21 @@ use App\Http\Controllers\Controller;
 |
 */
 
-// SetLocale 404 Not Found
-Route::fallback(function (Request $request) {
-    $route = Route::getCurrentRoute();
-    // WEB側画面
-    if (empty($route->getPrefix())) {
-        $fallback = $route->parameter('fallbackPlaceholder');
-        // 言語用Prefixが存在しない場合、言語を設定してリダイレクトする
-        if ($fallback === null || (strpos($fallback, 'ja') === false && strpos($fallback, 'en') === false)) {
-            $path = $request->getPathInfo();
-            return redirect('/ja' . $path);
-        }
-    }
-    return abort(404);
+//ロケール設定
+Route::group(['middleware' => 'set.locale'], function () {
+    Route::get('/setlocale/{locale}', function ($locale) {
+        session()->put('locale', $locale);
+        return redirect()->back();
+    })->name('locale');
 });
 
 //verified = メール認証済みかチェック
 //auth.session = 別デバイス・ブラウザでログインしたらセッションを切断
 
-Route::group(['middleware' => ['verified', 'auth.session']], function () {
-//Route::group(['prefix' => '{lang}', 'where' => ['lang' => 'ja|en'], 'middleware' => ['verified', 'auth.session']], function () {
+Route::group(['middleware' => ['verified', 'auth.session', 'set.locale']], function () {
     Route::get('/', function () {
         return view('auth.login');
-    })->name('dashboard');
+    })->name('home');
 
     Route::get('/dashboard', 'App\Http\Controllers\TaskController@index')
     ->name('dashboard');

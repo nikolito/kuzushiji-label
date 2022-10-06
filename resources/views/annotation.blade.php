@@ -1,4 +1,7 @@
-@php use Illuminate\Support\Facades\Storage; @endphp
+@php 
+  header('Cache-Control: no-store');
+  use Illuminate\Support\Facades\Storage; 
+@endphp
 <!DOCTYPE html>
 <html>
 
