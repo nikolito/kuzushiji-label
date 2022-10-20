@@ -77,7 +77,8 @@
                                     </p>
                                 </div>
                                 <div class="self-end my-4">
-                                    <a class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold" href="annotation/{{ $task->id }}/{{ $task->image->id }}">開く</a>
+                                    @php $now = time(); @endphp
+                                    <a class="p-2 text-gray-800 rounded whitespace-nowrap bg-green-400 hover:bg-blue-100 font-bold" href="annotation/{{ $task->id }}/{{ $task->image->id }}?t={{ $now }}">開く</a>
                                 </div>
                             </div>
                             <div class="flex justify-center">

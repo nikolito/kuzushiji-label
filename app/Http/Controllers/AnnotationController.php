@@ -110,7 +110,7 @@ class AnnotationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($task_id)
     {
         //
     }
@@ -136,5 +136,22 @@ class AnnotationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * 清書画面に飛ぶ finalize.blade.php
+     *
+     * @param  int  $task_id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_finalize($task_id)
+    {
+        //清書
+        $target_task = Task::with('image')
+            ->where('id', $task_id)
+            ->where('task_close', '!=', null)
+            ->first();
+
+        return view('finalize', compact('target_task'));
     }
 }

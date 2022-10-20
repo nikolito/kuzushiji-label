@@ -5,15 +5,15 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('finalize_list') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-white" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('working')" :active="request()->routeIs('working')">
-                        <b> {{ __('Return to Working') }}</b>
+                    <x-nav-link :href="route('finalize_list')" :active="request()->routeIs('finalize_list')">
+                        <b> {{ __('Return to Finalization List') }}</b>
                     </x-nav-link>
                     <x-nav-link :href="route('help')" :active="request()->routeIs('help')">
                         {{ __('Help') }}
@@ -100,7 +100,7 @@
             <div class="px-4">
                 <div class="font-medium text-base text-white-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-white-500">{{ Auth::user()->email }}</div>
-                <div class="font-medium text-sm text-white-500">*一番上のロゴをクリックするとダッシュボードに戻れます*</div>            </div>
+                <div class="font-medium text-sm text-white-500">*一番上のロゴをクリックすると清書リストに戻れます*</div>            </div>
 
             {{-- <div class="mt-3 space-y-1">
                 <!-- Authentication -->

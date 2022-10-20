@@ -167,7 +167,7 @@
                     エラーページが出た場合は、ロゴ<img src="{{ asset('logo.png') }}" class="inline w-8 align-middle">をクリックしてください。ホーム画面に移ります。
                 </p>
                 <p class="m-4">
-                    わからないことがある時は、<a href="{{ route('message') }}" class="text-orange-500 font-bold">連絡のページ</a>から管理者に連絡してください。
+                    わからないことがある・翻刻自体が間違っていると思う時は、<a href="{{ route('message') }}" class="text-orange-500 font-bold">連絡のページ</a>から管理者に連絡してください。説明はなるべく具体的にお願いします。
                 </p>
                 <p class="m-4">
                     ログアウトの下にある「ローカルストレージを消去」は、このサイトのアノテーション用に作られる一時的なデータを一括して消去するために使います。

@@ -354,7 +354,7 @@ class TaskController extends Controller
         ->orderBy('image_url', 'asc')
         ->get();
 
-        $all_images = Image::limit(3)->get(); //pagenation
+        $all_images = Image::orderBy('image_url', 'asc')->limit(3)->get(); //pagenation
 
         return view('search', compact('free_images', 'all_images', 'tasks_finished'));
     }
@@ -400,5 +400,19 @@ class TaskController extends Controller
         header('Content-type: application/json');
         echo json_encode($list, JSON_UNESCAPED_UNICODE);
     }
+
+    //清書リスト
+    public function finalize_list()
+    {
+        //完了したタスクと画像データを抽出
+        $tasks_finished = Task::with('image')
+        ->where('user_id', '!=', null)
+        ->where('task_close', '!=', null)
+        ->orderBy('task_close', 'asc')
+        ->get();
+
+        return view('final_list', compact('tasks_finished'));
+    }
+
 
 }

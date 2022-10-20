@@ -24,6 +24,11 @@
                     <x-nav-link :href="route('message')" :active="request()->routeIs('message')">
                         {{ __('Message') }}
                     </x-nav-link>
+                    @canany(['admin','checker'])
+                    <x-nav-link :href="route('finalize_list')" :active="request()->routeIs('finalize_list')">
+                        {{ __('Finalization') }}
+                    </x-nav-link>
+                    @endcanany
                 </div>
             </div>
 
@@ -32,7 +37,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-white-500 hover:text-white-700 hover:border-white-300 focus:outline-none focus:text-white-700 focus:border-white-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}@php if (Auth::user()->user_level === 1) print "（管理者）"; @endphp</div>
+                            <div>{{ Auth::user()->name }}<x-role /></div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -93,6 +98,11 @@
             <x-responsive-nav-link :href="route('message')" :active="request()->routeIs('message')">
                 {{ __('Message') }}
             </x-responsive-nav-link>
+            @canany(['admin','checker'])
+            <x-responsive-nav-link :href="route('finalize_list')" :active="request()->routeIs('finalize_list')">
+                {{ __('Finalization') }}
+            </x-responsive-nav-link>
+            @endcanany
         </div>
 
         <!-- Responsive Settings Options -->

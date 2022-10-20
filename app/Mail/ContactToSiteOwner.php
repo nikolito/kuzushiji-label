@@ -34,7 +34,7 @@ class ContactToSiteOwner extends Mailable
         $user = User::where('id', $this->id)->first();
         $sender_name = $user->name;
         $sender_email = $user->email;
-        $title = $sender_name. 'からのメールが届きました';
+        $title = $sender_name. '様からのメールが届きました';
         $content = $this->questions;
         
         return $this->from($sender_email)

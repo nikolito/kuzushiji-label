@@ -73,6 +73,16 @@ Route::group(['middleware' => ['verified', 'auth.session', 'set.locale']], funct
 
     Route::post('/search', 'App\Http\Controllers\TaskController@search')
     ->name('search');
+
+    Route::group(['middleware' => 'can:checker'], function () {
+        //清書のリストを表示
+        Route::get('/finalize', 'App\Http\Controllers\TaskController@finalize_list')
+            ->name('finalize_list');
+
+        //清書作業用
+        Route::get('/finalize/{task_id}', 'App\Http\Controllers\AnnotationController@show_finalize')
+            ->name('finalize_task');
+    });
 });
 
 require __DIR__.'/auth.php';

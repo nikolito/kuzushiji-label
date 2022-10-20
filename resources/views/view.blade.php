@@ -15,7 +15,7 @@
     <script src="{{ asset('annotorious-openseadragon-2.7.7/openseadragon-annotorious.min.js') }}"></script>
     <!-- shape-labelsにはsafariとchrome対応のためソースを一部修正したものを使用しています。 -->
     <script src="{{ asset('annotorious-shape-labels.min.js') }}"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

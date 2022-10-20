@@ -124,13 +124,13 @@
                     <div class="p-1 lg:w-1/4 md:w-1/5 w-full m-2">
                         <div class="h-full border-blue-400 border-2 p-4 rounded-lg">
                             <div class="flex">
-                                @if (Auth::user()->user_level === 1)
+                                @can('admin')
                                     <a data-micromodal-trigger="modal-confirm-{{ $task_finished->id }}" href='javascript:;' alt="完了取り消し" class="text-gray-400 text-sm text-right">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
                                     </a>
-                                @endif
+                                @endcan
                                 <div class="text-sm text-red-200 p-1">
                                     作業完了　{{ $task_finished->task_close }} 
                                 </div>
@@ -152,8 +152,8 @@
                         </div>
                     </div>
 
-                    {{-- 完了解除モーダル（user_level=1のみ） --}}
-                    @if (Auth::user()->user_level === 1)
+                    {{-- 完了解除モーダル（adminのみ） --}}
+                    @can('admin')
                         <div class="modal micromodal-slide" id="modal-confirm-{{ $task_finished->id }}" aria-hidden="true">
                             <div class="modal__overlay" tabindex="-1" data-micromodal-close>
                                 <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    @endcan
                     @endforeach
                 @endif
             </div>
