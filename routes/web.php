@@ -21,6 +21,12 @@ Route::group(['middleware' => 'set.locale'], function () {
         session()->put('locale', $locale);
         return redirect()->back();
     })->name('locale');
+    Route::get('/playground', function () {
+        return view('playground');
+    })->name('playground');
+    Route::get('/intro', function () {
+        return view('intro');
+    })->name('intro');
 });
 
 //verified = メール認証済みかチェック

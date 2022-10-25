@@ -173,6 +173,19 @@
                     ログアウトの下にある「ローカルストレージを消去」は、このサイトのアノテーション用に作られる一時的なデータを一括して消去するために使います。
                 </p>
             </div>
+
+            <h3 class="ml-8 mb-1 mt-8 font-semibold text-xl text-cyan-400 leading-tight">
+                5. 謝辞およびサイト制作・管理について
+            </h3>
+            <hr class="ml-8 mr-8 border-cyan-400 border-solid border-2">
+
+            <div class="ml-8 mr-8 mt-4 mb-8">
+                </h3>
+                <p class="m-4">
+                    自動翻刻には、学習モデルとしてGoogle合同会社のカラーヌワット・タリン氏制作のKuroNet（学習データはCODH・国文学研究資料館など）、自動翻刻実行環境の構築に国立民族歴史博物館の橋本雄太氏にご協力いただいています。<br>
+                    本サイトシステム制作・管理は佐賀大学地域学歴史文化研究センターの吉賀夏子が科研費<a href="https://kaken.nii.ac.jp/ja/grant/KAKENHI-PROJECT-22K18149/" target="_blank">22K18149</a>を基に行なっています。
+                </p>
+            </div>
         </div>
     </div>
 

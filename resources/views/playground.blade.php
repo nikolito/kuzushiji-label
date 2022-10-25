@@ -13,7 +13,7 @@
     {{-- <meta http-equiv="refresh" content="600"><!--リロード--> --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>アノテーション</title>
+    <title>{{ __('Playground') }}</title>
     <!-- CSS stylesheet -->
     <link rel="stylesheet" href="{{ asset('annotation_style.css') }}">
     <link rel="stylesheet" href="{{ asset('annotorious-openseadragon-2.7.7/annotorious.min.css') }}">
@@ -22,7 +22,6 @@
     <script src="{{ asset('annotorious-openseadragon-2.7.7/openseadragon-annotorious.min.js') }}"></script>
     <!-- shape-labelsにはsafariとchrome対応のためソースを一部修正したものを使用しています。 -->
     <script src="{{ asset('annotorious-shape-labels.min.js') }}"></script>
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +32,7 @@
 </head>
 
 <body class="antialiased text-slate-200 bg-slate-900">
-    @include('layouts.annonavi')
+    @include('layouts.guestnavi')
     <div id="task-state" class="flex fixed z-10 p-4 top-0 left-1/2">
       <div id="message_saved" class="m-1 bg-black"></div>
     </div>
@@ -42,9 +41,9 @@
             <button id="label_button" type="button" class="w-38 h-8 m-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-md px-2 py-1 text-center">
                 ラベルON/OFF
             </button>
-            <button id="save_button" type="button" class="w-38 h-8 m-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-md px-2 py-1 text-center">
+            {{-- <button id="save_button" type="button" class="w-38 h-8 m-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-md px-2 py-1 text-center">
                 保存
-            </button>
+            </button> --}}
         </div>
     </header>
 
@@ -54,8 +53,7 @@
 
     <script>
     // タスク対象URLの決定
-    //https://www.dl.saga-u.ac.jp/view/N0100501901/0005.tif/info.json
-    var image_manifest_url = "{{ $target_task->image->image_url }}";
+    var image_manifest_url = "https://www.dl.saga-u.ac.jp/view/N0100501901/0004.tif/info.json";
 
     //一意になるようなファイル名をmanifestに合わせて作成
     const regex = /(https:\/\/)([\-_.a-zA-Z0-0]+)([\/][\-_.a-zA-Z0-0]+[\/])/;
@@ -64,12 +62,8 @@
     this_file = this_file.replace('/', '-');
     this_file = this_file.replace('.tif/info.json', '');
 
-    const user_annotation_file = '/storage/users_annos/' + this_file + '-u' + '{{ $target_task->user_id }}' + '.json'; //利用者が作成したデータ
-    const user_annotation_file_url = "{{ config('app.url') }}" + user_annotation_file;
-    const pred_annotation_file = '/storage/pred_annos/' + this_file + '.json'; //翻刻ツール適用済データ
-    const pred_annotation_file_url = "{{ config('app.url') }}" + pred_annotation_file;
-    // const base_annotation_file = '/storage/w3c_annos/' + this_file + '.json';
-    // const base_annotation_file_url = "{{ config('app.url') }}" + base_annotation_file;
+    const pg_annotation_file = '/storage/playground_annos/' + this_file + '.json'; //利用者が作成したデータ
+    const pg_annotation_file_url = "{{ config('app.url') }}" + pg_annotation_file;
 
     // OpenSeadragon初期化
     window.onload = function() {
@@ -108,7 +102,7 @@
       }
 
       // users_annosにデータがあれば最優先で使用する
-      fetch(user_annotation_file_url)
+      fetch(pg_annotation_file_url)
         .then(response => {
           //失敗
           if(!response.ok) {
@@ -116,23 +110,11 @@
             throw new Error(response.statusText);
           }
           //成功
-          anno.loadAnnotations(user_annotation_file_url); //これを優先
-          console.log('users_annos file loaded');
+          anno.loadAnnotations(pg_annotation_file_url); //これを優先
+          console.log('pg_annos file loaded');
         })
         .catch(error => {
-          if (localStorage.getItem(this_file) != null) {
-            const str = localStorage.getItem(this_file);
-            const local_json = JSON.parse(str);
-            anno.setAnnotations(local_json);
-            console.log('local storage data loaded');
-          } else if (file_get_contents(pred_annotation_file_url, console.log) != '') {
-            anno.loadAnnotations(pred_annotation_file_url);
-            console.log('auto-annotated data loaded');
-          } else {
-            // pred_annotation_fileがないとき
-            // anno.loadAnnotations(base_annotation_file_url);
-            console.log('annotation data loading failed.');
-          }
+            console.log('error occured.');
         });
 
       // アノテーションデータ取得
@@ -156,7 +138,7 @@
       saveBtn.addEventListener('click', saveWorks);
 
       // アノテーションデータ自動保存
-      let intervalId_1 = setInterval(saveWorks, {{ KuzushijiConst::ANNO_SAVE_INTERVAL }});
+      // let intervalId_1 = setInterval(saveWorks, {{ KuzushijiConst::ANNO_SAVE_INTERVAL }});
 
       var timerId;
       var mes = document.getElementById('message_saved');
@@ -180,15 +162,15 @@
 
         // 定期的にファイルにデータ保存
         let newest_data = JSON.stringify(localStorage.getItem(this_file));
-        let users_data = user_annotation_file_url + 'を保存しました';
+        let base_data = pg_annotation_file_url + 'を保存しました';
 
         // サーバにデータを投げる（TODO）
         const formData = new FormData();
-        formData.append('file_name', user_annotation_file_url)
+        formData.append('file_name', pg_annotation_file_url)
         formData.append('json_data', newest_data);
-        formData.append('users_info', users_data);
+        formData.append('users_info', base_data);
 
-        fetch("{{ config('app.url') }}/request.php", {
+        fetch("{{ config('app.url') }}/request_playground.php", {
             method: 'POST',
             body: formData,
             credentials: 'same-origin',

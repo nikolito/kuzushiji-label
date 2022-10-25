@@ -23,10 +23,13 @@
             </div>
 
             <h3 class="mt-8 ml-8 mb-1 font-semibold text-xl text-purple-400 leading-tight">
-                選択できる画像 {{ count($tasks_finished) }} 枚
+                選択できる画像 {{ $tasks_finished->total() }} 枚
             </h3>
             <hr class="ml-8 mr-8 border-purple-400 border-solid border-2">
 
+            <div class="ml-8 mr-8 my-4">
+                {{ $tasks_finished->links('vendor.pagination.tailwind_final_list') }}
+            </div>
             <div class="flex flex-wrap px-6">
                 @if (count($tasks_finished) < 1)
                     <div class="m-8 border-purple-800 bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -44,7 +47,7 @@
                             $count2 = $count2 + 1;
                             //if ($count2 > KuzushijiConst::TASK_FINISHED) break;
                         @endphp
-                        <div class="p-1 lg:w-1/4 md:w-1/5 w-full m-2">
+                        <div class="p-1 lg:w-1/4 md:w-1/4 w-full m-2">
                             <div class="h-full border-purple-400 border-2 p-4 rounded-lg">
                                 <div class="flex">
                                     <a data-micromodal-trigger="modal-confirm-{{ $task_finished->id }}" href='javascript:;' alt="完了取り消し" class="text-gray-400 text-sm text-right">

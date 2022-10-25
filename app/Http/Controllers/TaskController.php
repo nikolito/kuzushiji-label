@@ -11,6 +11,7 @@ use App\Models\Image;
 use App\Consts\KuzushijiConst;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactToSiteOwner;
+use Illuminate\Pagination\Paginator;
 
 class TaskController extends Controller
 {
@@ -409,7 +410,7 @@ class TaskController extends Controller
         ->where('user_id', '!=', null)
         ->where('task_close', '!=', null)
         ->orderBy('task_close', 'asc')
-        ->get();
+        ->paginate(KuzushijiConst::PAGENATION);
 
         return view('final_list', compact('tasks_finished'));
     }

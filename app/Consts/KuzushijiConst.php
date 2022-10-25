@@ -9,6 +9,7 @@ class KuzushijiConst {
   const TASK_DAY_LIMIT = 7; //作業期間
   const ANNO_SAVE_INTERVAL = 30000; //アノテーションの自動保存用時間間隔
   const TASK_FINISHED = 12; //ダッシュボードでの完了画像表示用
+  const PAGENATION = 6; //pagination
 
   // const RECOGNITION_NONE = 0;
   // const RECOGNITION_KURONET = 1;

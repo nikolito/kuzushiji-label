@@ -32,6 +32,7 @@
   "Dashboard": "ダッシュボード",
   "You're logged in!": "ログインしました",
   "Working": "進捗",
+  "Return to Home": "ホームページに戻る",
   "Return to Working": "進捗に戻る",
   "Whoops! Something went wrong.": "あれれ？！問題が起きました",
   "Hello!": "こんにちは",
@@ -45,5 +46,6 @@
   "Links": "リンク集",
   "Search for Images": "画像検索",
   "Finalization": "清書",
-  "Return to Finalization List": "清書リストに戻る"
+  "Return to Finalization List": "清書リストに戻る",
+  "Intro": "このサイトについて"
   }
