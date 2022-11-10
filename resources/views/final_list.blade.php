@@ -77,13 +77,13 @@
                             </div>
                         </div>
 
-                        {{-- 完了解除モーダル --}}
+                        {{-- 完了チェックモーダル --}}
                         <div class="modal micromodal-slide" id="modal-confirm-{{ $task_finished->id }}" aria-hidden="true">
                             <div class="modal__overlay" tabindex="-1" data-micromodal-close>
                                 <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                                     <header class="modal__header">
                                         <h2 class="modal__title" id="modal-1-title">
-                                            この作業の完了状態を取り消します。
+                                            この画像を専門家によるチェック済み清書とします。
                                         </h2>
                                         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                                     </header>
@@ -98,12 +98,12 @@
                                         </div>
                                     </main>
                                     <footer class="modal__footer flex gap-x-4">
-                                        <form method="POST" action="{{ route('working_reopen') }}">
+                                        <form method="POST" action="{{ route('finalized') }}">
                                             @csrf
                                             @method('POST')
                                             <input type="hidden" name="id" value="{{ $task_finished->id }}" />
                                             <input type="hidden" name="user_id" value="{{ $task_finished->user_id }}" />
-                                            <button class="modal__btn modal__btn-primary">本当に取り消す</button>
+                                            <button class="modal__btn modal__btn-primary">清書完了</button>
                                         </form>
                                         <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">キャンセル</button>
                                     </footer>

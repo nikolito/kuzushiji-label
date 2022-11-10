@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('annotations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('task_id')->constrained('tasks');
+            $table->string('annotation_filename');
+            $table->timestamp('finalized_at')->nullable();
             $table->timestamps();
+            $table->softdeletes();
         });
     }
 

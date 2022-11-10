@@ -88,6 +88,10 @@ Route::group(['middleware' => ['verified', 'auth.session', 'set.locale']], funct
         //清書作業用
         Route::get('/finalize/{task_id}', 'App\Http\Controllers\AnnotationController@show_finalize')
             ->name('finalize_task');
+        
+        //清書完了
+        Route::post('/finalize', 'App\Http\Controllers\TaskController@finalize_checked')
+            ->name('finalized');
     });
 });
 

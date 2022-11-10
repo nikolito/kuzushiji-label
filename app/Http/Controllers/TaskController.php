@@ -415,5 +415,17 @@ class TaskController extends Controller
         return view('final_list', compact('tasks_finished'));
     }
 
+    //清書チェックフラグ　完了
+    public function finalize_checked(Request $request) {
+        //annotationテーブルのfinalized_atに日時書込み
 
+        $tasks_finished = Task::with('image')
+            ->where('user_id', '!=', null)
+            ->where('task_close', '!=', null)
+            ->orderBy('task_close', 'asc')
+            ->paginate(KuzushijiConst::PAGENATION);
+
+        //$message = "清書が完了しました";
+        return view('final_list', compact('tasks_finished'));
+    }
 }

@@ -18,14 +18,14 @@
     </head>
     <body class="font-sans antialiased text-white">
         <div class="min-h-screen">
-            @include('layouts.guestnavi')
+            {{-- @include('layouts.guestnavi')
 
             <!-- Page Heading -->
             <header class="bg-transparent shadow">
                 <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
-            </header>
+            </header> --}}
 
             <!-- Page Content -->
             <main>
