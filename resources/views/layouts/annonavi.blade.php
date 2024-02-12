@@ -37,7 +37,7 @@
                         </x-slot>
                     </x-dropdown>
                     <x-nav-link>
-                        {{ basename(str_replace('/info.json', '', $target_task->image->image_url)) }}を表示中
+                        {{ basename(str_replace('/info.json', '', $target_task->image->image_url)) }} ({{ $target_task->image->id}})を表示中
                     </x-nav-link>
                 </div>
             </div>
